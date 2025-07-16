@@ -14,15 +14,13 @@ console.log("Outside route:");
 console.log("__filename:", __filename);
 console.log("__dirname:", __dirname);
 
+
+const staticPath=path.join(import.meta.dirname,"public","index.html");
+app.use(express.static(staticPath));
+
 app.get("/", (req, res) => {
-    
 
-    console.log("Inside route:");
-    console.log("__filename:", __filename);
-    console.log("__dirname:", __dirname);
-
-    const homePagePath=path.join(import.meta.dirname,"public","index.html");
-    res.sendFile(homePagePath);
+    res.sendFile(staticPath);
 });
 
 app.listen(PORT, () => {
