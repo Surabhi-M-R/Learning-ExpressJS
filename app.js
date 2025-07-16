@@ -1,16 +1,31 @@
+
 import express from 'express';
-import {PORT} from './env.js';
+import { PORT } from './env.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// creating an instance 
-const app=express();
+// ✅ Convert import.meta.url to __filename and __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.get("/",(req,res)=>res.send(" hello home page ") );
-app.get("/about",(req,res)=>res.send(" hello about page  ") );
-app.get("/contact",(req,res)=>res.send(" hello contact page ") );
-app.get("/last",(req,res)=>res.send(" hello last page ") );
+const app = express();
 
-//const PORT =process.env.PORT ||3000 ;
-app.listen(PORT,()=>{
-    console.log(`Server is running at PORT : ${PORT}`);
+console.log("Outside route:");
+console.log("__filename:", __filename);
+console.log("__dirname:", __dirname);
 
+app.get("/", (req, res) => {
+    
+
+    console.log("Inside route:");
+    console.log("__filename:", __filename);
+    console.log("__dirname:", __dirname);
+
+    const homePagePath=path.join(import.meta.dirname,"public","index.html");
+    res.sendFile(homePagePath);
 });
+
+app.listen(PORT, () => {
+    console.log(`Server is running at PORT: ${PORT}`);
+});
+
