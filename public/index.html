@@ -7,7 +7,21 @@
    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Welcome to My Express App</h1>
-  <p>This is a basic index.html page served using Node.js and Express.</p>
+  <h1> Home Page </h1>
+  <form action="/contact" method="GET">
+  <div>
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name">
+  </div>
+
+  <div>
+    <label for="message">Message</label>
+    <textarea name="message" id="message" placeholder="Write your message here"></textarea>
+  </div>
+
+  <button type="submit">Send</button>
+</form>
+
+
 </body>
 </html>
