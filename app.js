@@ -25,6 +25,11 @@ const app = express();
 const staticPath=path.join(import.meta.dirname,"public","index.html");
 app.use(express.static(staticPath));
 
+app.get("/product",(req,res)=>{
+    console.log(req.query);
+    res.send(`<h1> My product page and user search for the product ${req.query.search}</h1>`);
+});
+
 app.get("/profile/:username/article/:slug", (req, res) => {
       console.log(req.params);
       //res.send(`<h1> My user name is ${req.params.username}</h1>`)  ;
