@@ -58,26 +58,36 @@ import { PORT } from './env.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// ✅ Properly define __dirname
+//  Properly define __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// ✅ Correct way to serve static files from "public" folder
+//  Correct way to serve static files from "public" folder
 const staticPath = path.join(__dirname, "public");
 app.use(express.static(staticPath));
+app.use(express.urlencoded({extended:true})); //uses the qs library to parse the query string, allowing for more complex structures like nested objects, which the deafault ~
 
-// ✅ Handle GET form submission from /contact
-app.get("/contact", (req, res) => {
+// Handle GET form submission from /contact
+// app.get("/contact", (req, res) => {
+//     console.log("Query parameters from contact form:", req.query);
+//     res.redirect("/"); // redirect back to home page after submission
+// });
+
+app.post("/contact", (req, res) => {
     console.log("Query parameters from contact form:", req.query);
     res.redirect("/"); // redirect back to home page after submission
 });
 
-// ✅ Optional: Handle home page (index.html)
+// Handle home page (index.html)
 app.get("/", (req, res) => {
     res.sendFile(path.join(staticPath, "index.html"));
 });
+app.use((req,res)=>{
+    // return res.status(404).send("<h1>page not found</h1>");  
+    return res.status(404).sendFile(path.join(import.meta.dirname,"views","404.html"));
+})
 
 app.listen(PORT, () => { 
     console.log(`Server is running at PORT: ${PORT}`);
